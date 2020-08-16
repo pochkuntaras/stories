@@ -1,9 +1,7 @@
-function component() {
-  var element = document.createElement('div');
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-  element.innerHTML = 'Getting Started';
-
-  return element;
-}
-
-document.body.appendChild(component());
+ReactDOM.render(
+  <h1>Getting Started</h1>,
+  document.getElementById('root')
+);
