@@ -1,0 +1,19 @@
+{
+  "name": "stories",
+  "version": "1.0.0",
+  "description": "The simple application for saving your stories.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pochkuntaras/stories.git"
+  },
+  "author": "Taras Pochkun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pochkuntaras/stories/issues"
+  },
+  "homepage": "https://github.com/pochkuntaras/stories#readme"
+}
