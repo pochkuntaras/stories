@@ -2,9 +2,11 @@
   "name": "stories",
   "version": "1.0.0",
   "description": "The simple application for saving your stories.",
+  "private": true,
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/pochkuntaras/stories/issues"
   },
-  "homepage": "https://github.com/pochkuntaras/stories#readme"
+  "homepage": "https://github.com/pochkuntaras/stories#readme",
+  "devDependencies": {
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  }
 }
