@@ -1,6 +1,7 @@
 import request from 'superagent';
-import humps from 'humps';
-
+import { decamelizeKeys, camelizeKeys } from 'humps';
+import { stringify } from 'qs';
+import { pickBy, identity } from 'lodash';
 import { observable, action, runInAction } from 'mobx';
 
 class Store {
@@ -8,19 +9,37 @@ class Store {
 
   @observable loading = true;
   @observable articles = [];
+  @observable formData = {
+    articleSearch: {}
+  };
 
   @action.bound
-  async fetchArticles() {
+  async fetchArticles(query) {
     const articlesUrl = `${this.baseUrl}/articles`
 
     this.loading = true;
 
-    const { body } = await request.get(articlesUrl).set('accept', 'json')
-    const { articles } = humps.camelizeKeys(body);
+    let r = request.get(articlesUrl);
+
+    if (query) {
+      r.query(stringify(decamelizeKeys(query), { arrayFormat: 'brackets' }));
+    }
+
+    const { body } = await r.set('accept', 'json')
+    const { articles } = camelizeKeys(body);
 
     runInAction(() => {
       this.articles = articles;
       this.loading = false;
+      this.formData.articleSearch = camelizeKeys(query)
+    });
+  };
+
+  @action
+  setValues({ form, name, value }) {
+    runInAction(() => {
+      this.formData[form][name] = value;
+      this.formData[form] = pickBy(this.formData[form], identity);
     });
   };
 }

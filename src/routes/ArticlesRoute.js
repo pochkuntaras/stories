@@ -1,6 +1,6 @@
 import React from 'react';
 import { articlesPath } from 'helpers/routes';
-import Articles from 'pages/Articles';
+import Articles from 'components/pages/Articles';
 
 export default {
   name: 'Articles',
