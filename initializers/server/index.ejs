@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Stories</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <% if (__PRODUCTION__) { %>
+      <script src="/<%- webpackAsset('vendor', 'js') %>"></script>
+    <% } %>
+    <script src="/<%- webpackAsset('bundle', 'js') %>"></script>
+  </body>
+</html>
