@@ -7,16 +7,18 @@ import browserHistory from 'helpers/history';
 import historyCallback from './historyCallback';
 import AppRoutesSwitch from 'routes/AppRoutesSwitch';
 
+import './stylesheets/component.sass';
+
 browserHistory.listen(historyCallback);
 
 historyCallback(window.location);
 
 const AppLayout = ({ children }) => (
   <Router history={browserHistory}>
-    <main>
+    <main style={{margin: '10px'}}>
       <nav>
         <Link to={rootPath()}>Home</Link>
-        |
+        &nbsp;|&nbsp;
         <Link to={articlesPath()}>Articles</Link>
       </nav>
       <AppRoutesSwitch />

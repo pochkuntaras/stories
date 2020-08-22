@@ -3,6 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { upcaseFirstLetter } from './helpers';
 
+import './stylesheets/component.sass';
+
 const TextField = ({ name, placeholder, value, onChange }) => (
   <input
     type="text"

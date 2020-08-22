@@ -14,12 +14,14 @@ import SearchForm from './widgets/SearchFrom';
 import Sortable from 'components/shared/Sortable';
 import { articlesPath } from 'helpers/routes';
 
+import { dateFormat } from 'helpers';
+
 @observer
 class Articles extends Component {
   render() {
     const { articles, loading } = store;
     return (
-      !loading && <section>
+      <section>
         <SearchForm />
         <Table>
           <TableHead>
@@ -35,25 +37,25 @@ class Articles extends Component {
               </Sortable>
               </th>
               <th>Text</th>
-              <th>
+              <th style={{ width: '140px' }}>
                 <Sortable name='articles' resourcePath={articlesPath} sort="kind">
                   Kind
                 </Sortable>
               </th>
-              <th>Created at</th>
-              <th>Updated at</th>
+              <th style={{ width: '120px' }}>Created at</th>
+              <th style={{ width: '120px' }}>Updated at</th>
             </TableRow>
           </TableHead>
           <TableBody>
             {
-              map(articles, (article) => (
+              !loading && map(articles, (article) => (
                 <TableRow key={article.id}>
                   <td>{article.story.name}</td>
                   <td>{article.name}</td>
                   <td>{article.text}</td>
                   <td>{article.kind}</td>
-                  <td>{article.createdAt}</td>
-                  <td>{article.updatedAt}</td>
+                  <td>{dateFormat(article.createdAt, 'DD MMM HH:mm').toUpperCase()}</td>
+                  <td>{dateFormat(article.updatedAt, 'DD MMM HH:mm').toUpperCase()}</td>
                 </TableRow>
               ))
             }

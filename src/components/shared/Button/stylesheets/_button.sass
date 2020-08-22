@@ -1,0 +1,40 @@
+.button
+  display: inline-block
+  margin: 6px
+  padding: 4px 16px
+  border: none
+  border-radius: 8px
+  font: normal 14px Arial, sans-serif
+  text-decoration: none
+  line-height: 30px
+  vertical-align: top
+  color: $white
+  fill: $white
+  box-sizing: border-box
+
+  &:hover
+    cursor: pointer
+
+  &:hover,
+  &:focus
+    outline: none
+
+  &::-moz-focus-inner
+    padding: 0
+    border: 0
+
+  &:visited
+    color: $white
+
+  &_blue
+    background-color: $dim-blue
+
+    &:hover,
+    &:focus
+      background-color: $blue
+
+  &_leftmost
+    margin-left: 0
+
+  &_rightmost
+    margin-left: 0

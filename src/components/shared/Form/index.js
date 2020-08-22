@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Form = ({ onSubmit, children, style }) => (
-  <form className='form' {...{ onSubmit, children, style }} />
+import './stylesheets/component.sass';
+
+const Form = ({ heading, onSubmit, children, style }) => (
+  <form className='form' {...{ onSubmit, children, style }}>
+    {heading && <h2 className="form__heading">{heading}</h2>}
+    {children}
+  </form>
 );
 
 Form.propTypes = {
