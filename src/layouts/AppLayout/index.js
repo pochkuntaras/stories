@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { rootPath, articlesPath } from 'helpers/routes';
 import { Router } from 'react-router';
-import { Link } from 'react-router-dom';
+import Link from 'components/shared/Link';
 import browserHistory from 'helpers/history';
 import historyCallback from './historyCallback';
 import AppRoutesSwitch from 'routes/AppRoutesSwitch';

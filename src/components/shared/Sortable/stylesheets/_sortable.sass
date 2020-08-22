@@ -1,0 +1,28 @@
+.sortable
+  display: block
+  padding: 10px 0
+  font: bold 16px Arial, sans-serif
+  text-decoration: none
+  text-align: left
+  color: $blue
+  position: relative
+  transition: color .5s linear
+
+  &:hover,
+  &:focus
+    outline: none
+
+  &_asc:after
+    content: '▼'
+
+  &_desc:after
+    content: '▲'
+
+  &:after
+    position: absolute
+    width: 20px
+    height: 20px
+    top: 50%
+    right: 5px
+    margin-top: -10px
+    text-align: center

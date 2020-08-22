@@ -1,8 +1,9 @@
 import request from 'superagent';
 import { decamelizeKeys, camelizeKeys } from 'humps';
 import { stringify } from 'qs';
-import { pickBy, identity } from 'lodash';
+import { pickBy, identity, assign } from 'lodash';
 import { observable, action, runInAction } from 'mobx';
+import { articlesPath } from 'helpers/routes';
 
 class Store {
   baseUrl = `${process.env.PROTOCOL}://${process.env.DOMAIN}`
@@ -10,7 +11,10 @@ class Store {
   @observable loading = true;
   @observable articles = [];
   @observable formData = {
-    articleSearch: {}
+    articles: {
+      sort: 'id',
+      direction: 'asc'
+    },
   };
 
   @action.bound
@@ -31,7 +35,7 @@ class Store {
     runInAction(() => {
       this.articles = articles;
       this.loading = false;
-      this.formData.articleSearch = camelizeKeys(query)
+      this.formData.articles = camelizeKeys(query);
     });
   };
 

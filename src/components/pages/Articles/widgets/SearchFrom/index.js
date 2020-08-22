@@ -19,19 +19,19 @@ class SearchForm extends Component {
     e.preventDefault();
 
     const { name, value } = event.target;
-    const form = 'articleSearch';
+    const form = 'articles';
 
     store.setValues({ form, name, value });
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    browserHistory.push(articlesPath(store.formData.articleSearch));
+    browserHistory.push(articlesPath(store.formData.articles));
   }
 
   render() {
-    const { articleSearch } = store.formData;
-    const { story, named, kind, text } = articleSearch;
+    const { articles } = store.formData;
+    const { story, named, kind, text } = articles;
 
     return (
       <Form onSubmit={this.handleSubmit} >

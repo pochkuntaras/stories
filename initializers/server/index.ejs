@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Stories</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <% if (__PRODUCTION__) { %>
-      <script src="/<%- webpackAsset('vendor', 'js') %>"></script>
-    <% } %>
-    <script src="/<%- webpackAsset('bundle', 'js') %>"></script>
-  </body>
+
+<head>
+  <title>Stories</title>
+  <% if (__PRODUCTION__) { %>
+  <link rel="stylesheet" type="text/css" href="/<%- webpackAsset('bundle', 'css') %>" />
+  <% } %>
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+</head>
+
+<body>
+  <div id="root" style="height: inherit;"></div>
+  <% if (__PRODUCTION__) { %>
+  <script src="/<%- webpackAsset('vendor', 'js') %>"></script>
+  <% } %>
+  <script src="/<%- webpackAsset('bundle', 'js') %>"></script>
+</body>
+
 </html>
