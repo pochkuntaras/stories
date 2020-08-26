@@ -2,11 +2,12 @@ import request from 'superagent';
 
 import { decamelizeKeys, camelizeKeys } from 'humps';
 import { stringify } from 'qs';
-import { pickBy, identity } from 'lodash';
-import { observable, action, runInAction } from 'mobx';
-
+import { pickBy, identity, findIndex } from 'lodash';
+import { observable, action, runInAction, autorun } from 'mobx';
 import browserHistory from 'helpers/history';
 import { articlesPath } from 'helpers/routes';
+
+import consumer from 'channels/consumer.js'
 
 class Store {
   baseUrl = `${process.env.PROTOCOL}://${process.env.DOMAIN}`
@@ -20,6 +21,27 @@ class Store {
     },
     editArticle: {}
   };
+
+  dispose = autorun(
+    () => {
+      consumer.subscriptions.create({
+        channel: "ArticlesChannel"
+      }, {
+        connected() {
+          this.perform('articles');
+        },
+        received: (data) => {
+          const { article } = camelizeKeys(data);
+          const { id } = article;
+          const index = findIndex(this.articles, { id });
+
+          runInAction(() => {
+            this.articles[index] = article;
+          });
+        }
+      });
+    }
+  );
 
   @action
   apiCall(path, method, query = {}) {

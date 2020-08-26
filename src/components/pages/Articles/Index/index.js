@@ -57,8 +57,8 @@ class Articles extends Component {
                   <td>{article.name}</td>
                   <td>{article.kind}</td>
                   <td>{article.text}</td>
-                  <td>{dateFormat(article.createdAt, 'DD MMM HH:mm').toUpperCase()}</td>
-                  <td>{dateFormat(article.updatedAt, 'DD MMM HH:mm').toUpperCase()}</td>
+                  <td>{dateFormat(article.createdAt, 'DD MMM HH:mm')}</td>
+                  <td>{dateFormat(article.updatedAt, 'DD MMM HH:mm')}</td>
                   <td>
                     <Link to={editArticlesPath(article.id)} title={`Edit article ${article.id}`}>Edit</Link>
                   </td>
