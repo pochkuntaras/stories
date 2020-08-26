@@ -44,8 +44,16 @@ class Articles extends Component {
                 </Sortable>
               </th>
               <th style={{ width: '30%' }}>Text</th>
-              <th style={{ width: '10%' }}>Created at</th>
-              <th style={{ width: '10%' }}>Updated at</th>
+              <th style={{ width: '10%' }}>
+                <Sortable name='articles' resourcePath={articlesPath} sort="created_at">
+                  Created at
+                </Sortable>
+              </th>
+              <th style={{ width: '10%' }}>
+                <Sortable name='articles' resourcePath={articlesPath} sort="updated_at">
+                  Updated at
+                </Sortable>
+              </th>
               <th></th>
             </TableRow>
           </TableHead>

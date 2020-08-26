@@ -11,6 +11,7 @@ import Col from 'components/shared/Grid/Col';
 import TextField from 'components/shared/TextField';
 import Button from 'components/shared/Button';
 
+import { map } from 'lodash';
 import store from 'store';
 
 @observer
@@ -37,7 +38,7 @@ class SearchForm extends Component {
 
   render() {
     const { articles } = store.formData;
-    const { story, named, kind, text } = articles;
+    const { story, named, kind, text, groupByField } = articles;
 
     return (
       <Form heading="Search articles" onSubmit={this.handleSubmit} >
@@ -53,6 +54,25 @@ class SearchForm extends Component {
           </Col>
           <Col size='2-10'>
             <TextField name="text" value={text} onChange={this.handleChange} />
+          </Col>
+          <Col size='2-10'>
+            <select className="input" name="groupByField" value={groupByField} onChange={this.handleChange}>
+              <option value="">Group by field</option>
+              {
+                map([
+                  { value: 'story_id', name: 'Story' },
+                  { value: 'name', name: 'Name' },
+                  { value: 'kind', name: 'Kind' },
+                  { value: 'updated_at', name: 'Updated at' }
+                ], (field) => (
+                  <option key={field.value} value={field.value}>{field.name}</option>
+                ))
+              }
+            </select>
+          </Col>
+        </Row>
+        <Row>
+          <Col size='8-10' style={{height: '50px'}}>
           </Col>
           <Col size='2-10'>
             <Button type='submit' size='full'>Search</Button>
