@@ -10,14 +10,14 @@ const AppLink = (props) => {
   let initClassName = 'link';
 
   const { color } = props;
-  const { to, title, className, style, children } = props;
+  const { to, title, className, style, children, onClick } = props;
 
   if (color) initClassName = `${initClassName} link_${color}`;
 
   return <Link {
   ...assign({},
     { className: className || initClassName },
-    { to, title, style, children }
+    { to, title, style, children, onClick }
   )
   }
   />;

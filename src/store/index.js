@@ -2,7 +2,7 @@ import request from 'superagent';
 
 import { decamelizeKeys, camelizeKeys } from 'humps';
 import { stringify } from 'qs';
-import { pickBy, identity, findIndex } from 'lodash';
+import { pickBy, identity, findIndex, remove } from 'lodash';
 import { observable, action, runInAction, autorun } from 'mobx';
 import browserHistory from 'helpers/history';
 import { articlesPath } from 'helpers/routes';
@@ -16,10 +16,7 @@ class Store {
   @observable articles = [];
   @observable meta = [];
   @observable formData = {
-    articles: {
-      sort: 'id',
-      direction: 'asc'
-    },
+    articles: {},
     editArticle: {}
   };
 
@@ -32,12 +29,13 @@ class Store {
           this.perform('articles');
         },
         received: (data) => {
-          const { article } = camelizeKeys(data);
+          const { article, destroy } = camelizeKeys(data);
           const { id } = article;
           const index = findIndex(this.articles, { id });
 
           runInAction(() => {
             this.articles[index] = article;
+            if (destroy) remove(this.articles, { id });
           });
         }
       });
@@ -86,13 +84,9 @@ class Store {
       (response) => {
         const { article } = camelizeKeys(response);
 
-        runInAction(() => {
-          this.formData.editArticle = article;
-        })
+        runInAction(() => this.formData.editArticle = article);
       },
-      (error) => {
-        console.error(error);
-      }
+      (error) => console.error(error)
     );
   }
 
@@ -103,12 +97,16 @@ class Store {
     const query = { article: decamelizeKeys({ name, kind, text }) };
 
     this.apiCall(`/articles/${id}`, 'patch', query).then(
-      (response) => {
-        browserHistory.push(articlesPath());
-      },
-      (error) => {
-        console.error(error);
-      }
+      () => browserHistory.push(articlesPath()),
+      (error) => console.error(error)
+    );
+  }
+
+  @action.bound
+  async destroyArticle(id) {
+    this.apiCall(`/articles/${id}`, 'delete').then(
+      () => browserHistory.push(articlesPath()),
+      (error) => console.error(error)
     );
   }
 

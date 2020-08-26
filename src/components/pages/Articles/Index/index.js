@@ -69,7 +69,9 @@ class Articles extends Component {
                   <td>{dateFormat(article.createdAt, 'DD MMM HH:mm')}</td>
                   <td>{dateFormat(article.updatedAt, 'DD MMM HH:mm')}</td>
                   <td>
-                    <Link to={editArticlesPath(article.id)} title={`Edit article ${article.id}`}>Edit</Link>
+                    <Link to={editArticlesPath(article.id)}>Edit</Link>
+                    &nbsp;|&nbsp;
+                    <Link to="#" onClick={() => store.destroyArticle(article.id)}>Delete</Link>
                   </td>
                 </TableRow>
               ))
@@ -88,7 +90,7 @@ class Articles extends Component {
           </thead>
           <TableBody>
             {map(meta, (data) => (
-              <TableRow>
+              <TableRow key={data.storyName}>
                 <td>{data.storyName}</td>
                 <td>{data.countArticles}</td>
                 <td>{data.countKinds}</td>
