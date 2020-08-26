@@ -8,3 +8,4 @@ const buildPath = (path, query) => {
 
 export const rootPath = () => '/';
 export const articlesPath = (query) => buildPath('/articles', query);
+export const editArticlesPath = (id = ':id') => `/articles/${id}/edit`;

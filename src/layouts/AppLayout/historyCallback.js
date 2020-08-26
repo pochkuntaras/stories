@@ -9,7 +9,7 @@ export default (location) => {
     const query = parse(location.search.substring(1));
 
     if (match && typeof route.prepareData === 'function') {
-      route.prepareData(store, query);
+      route.prepareData(store, match, query);
     }
   });
 

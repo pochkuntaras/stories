@@ -9,10 +9,11 @@ import Table from 'components/shared/Table';
 import TableHead from 'components/shared/Table/Head';
 import TableBody from 'components/shared/Table/Body';
 import TableRow from 'components/shared/Table/Row';
+import Link from 'components/shared/Link';
 
 import SearchForm from './widgets/SearchFrom';
 import Sortable from 'components/shared/Sortable';
-import { articlesPath } from 'helpers/routes';
+import { articlesPath, editArticlesPath } from 'helpers/routes';
 
 import { dateFormat } from 'helpers';
 
@@ -20,30 +21,32 @@ import { dateFormat } from 'helpers';
 class Articles extends Component {
   render() {
     const { articles, loading } = store;
+
     return (
       <section>
         <SearchForm />
         <Table>
           <TableHead>
             <TableRow>
-              <th>
+              <th style={{ width: '15%' }}>
                 <Sortable name='articles' resourcePath={articlesPath} sort="story">
                   Story
                 </Sortable>
               </th>
-              <th>
+              <th style={{ width: '15%' }}>
                 <Sortable name='articles' resourcePath={articlesPath} sort="named">
                   Name
               </Sortable>
               </th>
-              <th>Text</th>
-              <th style={{ width: '140px' }}>
+              <th style={{ width: '10%' }}>
                 <Sortable name='articles' resourcePath={articlesPath} sort="kind">
                   Kind
                 </Sortable>
               </th>
-              <th style={{ width: '120px' }}>Created at</th>
-              <th style={{ width: '120px' }}>Updated at</th>
+              <th style={{ width: '30%' }}>Text</th>
+              <th style={{ width: '10%' }}>Created at</th>
+              <th style={{ width: '10%' }}>Updated at</th>
+              <th></th>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -52,10 +55,13 @@ class Articles extends Component {
                 <TableRow key={article.id}>
                   <td>{article.story.name}</td>
                   <td>{article.name}</td>
-                  <td>{article.text}</td>
                   <td>{article.kind}</td>
+                  <td>{article.text}</td>
                   <td>{dateFormat(article.createdAt, 'DD MMM HH:mm').toUpperCase()}</td>
                   <td>{dateFormat(article.updatedAt, 'DD MMM HH:mm').toUpperCase()}</td>
+                  <td>
+                    <Link to={editArticlesPath(article.id)} title={`Edit article ${article.id}`}>Edit</Link>
+                  </td>
                 </TableRow>
               ))
             }

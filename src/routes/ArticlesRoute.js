@@ -1,6 +1,6 @@
 import React from 'react';
 import { articlesPath } from 'helpers/routes';
-import Articles from 'components/pages/Articles';
+import Articles from 'components/pages/Articles/Index';
 
 export default {
   name: 'Articles',
@@ -8,5 +8,5 @@ export default {
   strict: true,
   path: articlesPath(),
   render: () => <Articles/>,
-  prepareData: (store, query) => store.fetchArticles(query)
+  prepareData: (store, match, query) => store.fetchArticles(query)
 };

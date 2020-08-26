@@ -1,8 +1,11 @@
 import request from 'superagent';
+
 import { decamelizeKeys, camelizeKeys } from 'humps';
 import { stringify } from 'qs';
-import { pickBy, identity, assign } from 'lodash';
+import { pickBy, identity } from 'lodash';
 import { observable, action, runInAction } from 'mobx';
+
+import browserHistory from 'helpers/history';
 import { articlesPath } from 'helpers/routes';
 
 class Store {
@@ -15,29 +18,75 @@ class Store {
       sort: 'id',
       direction: 'asc'
     },
+    editArticle: {}
   };
+
+  @action
+  apiCall(path, method, query = {}) {
+    return new Promise((resolve, reject) => {
+      let r = request[method.toLowerCase()](`${this.baseUrl}${path}`);
+
+      if (query) {
+        r.query(stringify(decamelizeKeys(query), { arrayFormat: 'brackets' }));
+      }
+
+      r.set('accept', 'json').end((error, data) => (
+        error ? reject(error) : resolve(data.body)
+      ));
+    });
+  }
 
   @action.bound
   async fetchArticles(query) {
-    const articlesUrl = `${this.baseUrl}/articles`
-
     this.loading = true;
 
-    let r = request.get(articlesUrl);
+    this.apiCall('/articles', 'get', query).then(
+      (response) => {
+        const { articles } = camelizeKeys(response);
 
-    if (query) {
-      r.query(stringify(decamelizeKeys(query), { arrayFormat: 'brackets' }));
-    }
-
-    const { body } = await r.set('accept', 'json')
-    const { articles } = camelizeKeys(body);
-
-    runInAction(() => {
-      this.articles = articles;
-      this.loading = false;
-      this.formData.articles = camelizeKeys(query);
-    });
+        runInAction(() => {
+          this.articles = articles;
+          this.loading = false;
+          this.formData.articles = camelizeKeys(query);
+        })
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   };
+
+  @action.bound
+  async fetchArticle(id) {
+    this.apiCall(`/articles/${id}`, 'get').then(
+      (response) => {
+        const { article } = camelizeKeys(response);
+
+        runInAction(() => {
+          this.formData.editArticle = article;
+        })
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
+  @action.bound
+  async updateArticle() {
+    const { id } = this.formData.editArticle;
+    const { name, kind, text } = this.formData.editArticle;
+    const query = { article: decamelizeKeys({ name, kind, text }) };
+
+    this.apiCall(`/articles/${id}`, 'patch', query).then(
+      (response) => {
+        browserHistory.push(articlesPath());
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
 
   @action
   setValues({ form, name, value }) {
