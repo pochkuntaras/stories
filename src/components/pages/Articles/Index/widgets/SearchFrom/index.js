@@ -43,19 +43,21 @@ class SearchForm extends Component {
     return (
       <Form heading="Search articles" onSubmit={this.handleSubmit} >
         <Row>
-          <Col size='2-10'>
+          <Col size='4-10'>
             <TextField name="story" value={story} onChange={this.handleChange} />
           </Col>
-          <Col size='2-10'>
+          <Col size='3-10'>
             <TextField name="named" placeholder="Name" value={named} onChange={this.handleChange} />
           </Col>
-          <Col size='2-10'>
+          <Col size='3-10'>
             <TextField name="kind" value={kind} onChange={this.handleChange} />
           </Col>
-          <Col size='2-10'>
+        </Row>
+        <Row>
+          <Col size='4-10'>
             <TextField name="text" value={text} onChange={this.handleChange} />
           </Col>
-          <Col size='2-10'>
+          <Col size='3-10'>
             <select className="input" name="groupByField" value={groupByField} onChange={this.handleChange}>
               <option value="">Group by field</option>
               {
@@ -70,11 +72,7 @@ class SearchForm extends Component {
               }
             </select>
           </Col>
-        </Row>
-        <Row>
-          <Col size='8-10' style={{height: '50px'}}>
-          </Col>
-          <Col size='2-10'>
+          <Col size='3-10'>
             <Button type='submit' size='full'>Search</Button>
           </Col>
         </Row>

@@ -14,6 +14,7 @@ class Store {
 
   @observable loading = true;
   @observable articles = [];
+  @observable meta = [];
   @observable formData = {
     articles: {
       sort: 'id',
@@ -64,10 +65,11 @@ class Store {
 
     this.apiCall('/articles', 'get', query).then(
       (response) => {
-        const { articles } = camelizeKeys(response);
+        const { articles, meta } = camelizeKeys(response);
 
         runInAction(() => {
           this.articles = articles;
+          this.meta = meta;
           this.loading = false;
           this.formData.articles = camelizeKeys(query);
         })

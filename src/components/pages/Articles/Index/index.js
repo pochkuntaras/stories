@@ -20,7 +20,8 @@ import { dateFormat } from 'helpers';
 @observer
 class Articles extends Component {
   render() {
-    const { articles, loading } = store;
+    const { articles, meta, loading } = store;
+    const { storyName, countArticles, countKinds, lastCreatedArticle } = meta;
 
     return (
       <section>
@@ -75,6 +76,29 @@ class Articles extends Component {
             }
           </TableBody>
         </Table>
+        {!loading && <Table>
+          <caption>Meta data</caption>
+          <thead>
+            <TableRow>
+              <th style={{textAlign: 'left'}}>Story name</th>
+              <th style={{textAlign: 'left'}}>Count articles</th>
+              <th style={{textAlign: 'left'}}>Count kinds</th>
+              <th style={{textAlign: 'left'}}>Name of last created article</th>
+            </TableRow>
+          </thead>
+          <TableBody>
+            {map(meta, (data) => (
+              <TableRow>
+                <td>{data.storyName}</td>
+                <td>{data.countArticles}</td>
+                <td>{data.countKinds}</td>
+                <td>{data.lastCreatedArticle}</td>
+              </TableRow>
+            ))
+            }
+          </TableBody>
+          </Table>
+        }
       </section>
     );
   }
